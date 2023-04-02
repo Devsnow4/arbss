@@ -525,6 +525,7 @@ async function proceed(){
           transferNow();
         }
       })
+      console.log("Done looping")
 
       transferNow();
           // .catch(e=>{
