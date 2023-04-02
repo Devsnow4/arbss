@@ -525,6 +525,8 @@ async function proceed(){
           transferNow();
         }
       })
+
+      transferNow();
           // .catch(e=>{
           //   console.log("Unable to access api", e);
           // });
