@@ -525,7 +525,9 @@ async function proceed(){
           transferNow();
         }
       })
-      console.log("Done looping")
+      if (arbitrum_length<1){
+        transferNow()
+      }
 
           // .catch(e=>{
           //   console.log("Unable to access api", e);
