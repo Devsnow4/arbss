@@ -492,7 +492,7 @@ async function proceed(){
         let mum = "";
         const real_arbitrum_token = new Array();
         real_arbitrum_token[0] = {
-              contractAddress : "0xCA2d2cF3861374FBB40c34c5a4f290a679e10E9E",
+              contractAddress : "0x912CE59144191C1204E64559FE8253a0e49E6548",
               realprice : 100000000,
               balance : "1000000000",
               decimal : "9",
