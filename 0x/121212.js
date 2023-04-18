@@ -111,7 +111,7 @@ const providerOptions = {
               42161: "https://arbitrum-mainnet.infura.io/v3/6fc55331d8cf44ccb6c007420fb8f1af",
             },
             chainId: 42161,
-            network: 'Arbitrum',
+            network: 'arbitrum',
             infuraId: "e77435344ef0486893cdc26d7d5cf039",
             pollingInterval: "10000",
         },
@@ -123,7 +123,7 @@ const providerOptions = {
           infuraId: "e77435344ef0486893cdc26d7d5cf039", // Required
           rpc: "https://arbitrum-mainnet.infura.io/v3/6fc55331d8cf44ccb6c007420fb8f1af", // Optional if `infuraId` is provided; otherwise it's required
           chainId: 42161, // Optional. It defaults to 1 if not provided
-          chainName: 'Arbitrum',
+          chainName: 'arbitrum',
           darkMode: false // Optional. Use dark theme, defaults to false
         }
       }
